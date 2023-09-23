@@ -41,7 +41,7 @@ AlgebraError *AlgebraError::MatrixInvalidScalar()
     return new AlgebraError("Matrix has invalid scalar");
 }
 
-AlgebraError *AlgebraError::MatrixInvalidCrossProduct()
+AlgebraError *AlgebraError::MatrixInvalidmultiply()
 {
     return new AlgebraError("Matrix has invalid cross product");
 }

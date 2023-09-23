@@ -119,7 +119,7 @@ void testScalarMultiplication()
                         {4, 5, 6}}));
 }
 
-void testCrossProduct()
+void testmultiply()
 {
     Matrix a = Matrix({{1, 2, 3},
                        {4, 5, 6}});
@@ -131,7 +131,7 @@ void testCrossProduct()
     Matrix c = Matrix({{22, 28},
                        {49, 64}});
 
-    assert(Matrix::crossProduct(a, b) == c);
+    assert(Matrix::multiply(a, b) == c);
 
     assert(a == Matrix({{1, 2, 3},
                         {4, 5, 6}}));
@@ -258,7 +258,7 @@ int main()
     testMatrixAddition();
     testApply();
     testScalarMultiplication();
-    testCrossProduct();
+    testmultiply();
     testTranspose();
     testDeterminant();
     testVectorize();
