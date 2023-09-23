@@ -53,6 +53,15 @@ Matrix &NeuralNetworkLayer::feedForward(const Matrix &inputs)
     return *output;
 }
 
+double cost(const Matrix &output, const Matrix &targets)
+{
+    Matrix error = targets - output;
+    error.apply([](double x)
+                { return x * x; });
+
+    return error.sum();
+}
+
 Matrix NeuralNetworkLayer::backPropagation(const Matrix &inputs, const Matrix &targets, double learningRate)
 {
     Matrix output = this->feedForward(inputs);

@@ -229,10 +229,10 @@ Matrix &Matrix::multiply(double scalar, const Matrix &matrix)
     return *newMatrix;
 }
 
-Matrix &Matrix::crossProduct(const Matrix &A, const Matrix &B)
+Matrix &Matrix::multiply(const Matrix &A, const Matrix &B)
 {
     if (A._dimensions.N != B._dimensions.M)
-        throw AlgebraError::MatrixInvalidCrossProduct();
+        throw AlgebraError::MatrixInvalidmultiply();
 
     Matrix *newMatrix = new Matrix(A._dimensions.M, B._dimensions.N);
 
@@ -250,6 +250,18 @@ Matrix &Matrix::crossProduct(const Matrix &A, const Matrix &B)
     }
 
     return *newMatrix;
+}
+
+double Algebra::Matrix::sum() const
+{
+    double sum = 0;
+    size_t linearSize = this->_dimensions.M * this->_dimensions.N;
+    for (size_t i = 0; i < linearSize; i++)
+    {
+        sum += this->_matrix[i];
+    }
+
+    return sum;
 }
 
 Matrix &Matrix::transposed() const
@@ -341,7 +353,7 @@ Matrix &Matrix::operator-(const Matrix &matrix) const
 
 Matrix &Matrix::operator*(const Matrix &matrix) const
 {
-    return Matrix::crossProduct(*this, matrix);
+    return Matrix::multiply(*this, matrix);
 }
 
 Matrix &Matrix::operator*(double scalar) const

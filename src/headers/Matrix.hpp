@@ -45,7 +45,8 @@ namespace Algebra
         void apply(const MathFunction &f);
         static Matrix &add(const Matrix &A, const Matrix &B);
         static Matrix &multiply(double scalar, const Matrix &matrix);
-        static Matrix &crossProduct(const Matrix &A, const Matrix &B);
+        static Matrix &multiply(const Matrix &A, const Matrix &B);
+        double sum() const;
         Matrix &transposed() const;
 
         double determinant();

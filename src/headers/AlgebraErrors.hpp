@@ -19,7 +19,7 @@ namespace Algebra
         static AlgebraError *MatrixInvalidDimensions();
         static AlgebraError *MatrixInvalidOperation();
         static AlgebraError *MatrixInvalidScalar();
-        static AlgebraError *MatrixInvalidCrossProduct();
+        static AlgebraError *MatrixInvalidmultiply();
         static AlgebraError *MatrixInvalidDeterminant();
         static AlgebraError *MatrixInvalidTranspose();
         static AlgebraError *MatrixDivisionByZero();
