@@ -15,6 +15,6 @@ namespace Algebra
         NeuralNetwork(std::vector<double> topology, ActivationFunction activationFunction);
 
         std::vector<double> feedForward(std::vector<double> inputs);
-        // void backPropagation(std::vector<double> inputs, std::vector<double> targets, double learningRate = 0.1);
+        void backPropagation(std::vector<double> inputs, std::vector<double> targets, double learningRate = 0.1);
     };
 }

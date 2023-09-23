@@ -23,7 +23,6 @@ void testMatrixCreation()
                        {7, 8, 9}});
     assert(c.getDimensions().M == 3);
     assert(c.getDimensions().N == 3);
-
     assert(a == a);
     assert(b == b);
     assert(c == c);
@@ -34,7 +33,6 @@ void testMatrixCreation()
 
     Matrix d = Matrix({{1, 2, 3},
                        {4, 5, 6}});
-
     assert(b == d);
 }
 
@@ -50,7 +48,6 @@ void testMatrixAddition()
                        {8, 10, 12}});
 
     assert(Matrix::add(a, b) == c);
-
     assert(a == Matrix({{1, 2, 3},
                         {4, 5, 6}}));
     assert(b == Matrix({{1, 2, 3},
@@ -100,7 +97,6 @@ void testScalarMultiplication()
                        {8, 10, 12}});
 
     assert(Matrix::multiply(2, a) == b);
-
     assert(a == Matrix({{1, 2, 3},
                         {4, 5, 6}}));
 
@@ -132,10 +128,8 @@ void testmultiply()
                        {49, 64}});
 
     assert(Matrix::multiply(a, b) == c);
-
     assert(a == Matrix({{1, 2, 3},
                         {4, 5, 6}}));
-
     assert(b == Matrix({{1, 2},
                         {3, 4},
                         {5, 6}}));
@@ -228,24 +222,24 @@ void testNeuralNetwork()
 {
     srand(time(NULL));
 
-    NeuralNetwork a = NeuralNetwork({2, 3, 2}, {sigmoid, sigmoidDerivative});
+    NeuralNetwork a = NeuralNetwork({2, 1, 4, 5, 1}, {sigmoid, sigmoidDerivative});
 
     std::vector<double> inputs = {1, 0};
 
     // Training
-    // for (size_t i = 0; i < 10; i++)
-    // {
-    //     std::vector<double> targets = {1};
-    //     a.backPropagation(inputs, targets, 0.1);
+    for (size_t i = 0; i < 10; i++)
+    {
+        std::vector<double> targets = {1};
+        a.backPropagation(inputs, targets, 0.1);
 
-    //     targets = {0};
-    //     a.backPropagation(inputs, targets, 0.1);
-    // }
+        targets = {0};
+        a.backPropagation(inputs, targets, 0.1);
+    }
 
     // Testing
     std::vector<double> output = a.feedForward(inputs);
     std::cout << "Output: " << output[0] << std::endl;
-    std::cout << "Output: " << output[1] << std::endl;
+    std::cout << "Output size: " << output.size() << std::endl;
 }
 
 int main()

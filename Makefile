@@ -15,18 +15,34 @@ SRCS := $(wildcard $(SOURCE)/*.cpp)
 OBJS := $(patsubst $(SOURCE)/%.cpp, $(OBJECT)/%.o, $(SRCS))
 EXEC := $(BUILD)/Matrix.exe
 
+define compile
+	@IF NOT EXIST "$(OBJECT)" mkdir "$(OBJECT)"
+	@echo [ Compiling	] $(1)
+	@$(CXX) $(CFLAGS) -o $(2) -c $(1)
+endef
+
+define link
+	@echo [ Linking	] $(1)
+	@$(CXX) $(CFLAGS) -o $(1) $(2)
+endef
+
+define run
+	@echo [ Running	] $(1)
+	@echo.
+	@$(1)
+endef
+
 # Makefile commands
 all : $(EXEC)
 
 run:$(EXEC)
-	$(EXEC) $(ARGS)
+	$(call run,$^)
 
 $(EXEC) : $(OBJS)
-	$(CXX) $(CFLAGS) -o $(EXEC) $(OBJS)
+	$(call link,$@,$^)
 
 $(OBJECT)/%.o : $(SOURCE)/%.cpp
-	@IF NOT EXIST "$(OBJECT)" mkdir "$(OBJECT)"
-	$(CXX) $(CFLAGS) -o $@ -c $^
+	$(call compile,$^,$@)
 
 clean:
 	rmdir /s /q "$(BUILD)"

@@ -13,7 +13,7 @@ Matrix::Matrix(size_t M, size_t N)
 
     this->_dimensions.M = M;
     this->_dimensions.N = N;
-    this->_matrix = new double[M * N];
+    this->_matrix = new double[M * N]();
 }
 
 Matrix::Matrix(Dimensions dimensions)
@@ -35,6 +35,27 @@ Matrix::Matrix(const Matrix &matrix)
 
     size_t linearSize = this->_dimensions.M * this->_dimensions.N;
     std::copy(matrix._matrix, matrix._matrix + linearSize, this->_matrix);
+}
+
+Matrix &Algebra::Matrix::Identity(size_t M)
+{
+    Matrix *newMatrix = new Matrix(M, M);
+
+    for (size_t i = 0; i < M; i++)
+    {
+        newMatrix->setElement(i, i, 1);
+    }
+
+    return *newMatrix;
+}
+
+Matrix &Algebra::Matrix::Zero(Dimensions dimensions)
+{
+    Matrix *newMatrix = new Matrix(dimensions);
+    size_t linearSize = dimensions.M * dimensions.N;
+    std::fill(newMatrix->_matrix, newMatrix->_matrix + linearSize, 0);
+
+    return *newMatrix;
 }
 
 Matrix &Matrix::columnVector(std::vector<double> vector)
@@ -68,6 +89,39 @@ std::vector<double> Matrix::toVector() const
     for (size_t i = 0; i < linearSize; i++)
     {
         vector.push_back(this->_matrix[i]);
+    }
+
+    return vector;
+}
+
+std::vector<std::vector<double>> Algebra::Matrix::to2DVector() const
+{
+    std::vector<std::vector<double>> vector;
+    for (size_t i = 0; i < this->_dimensions.M; i++)
+    {
+        vector.push_back(this->getRow(i));
+    }
+
+    return vector;
+}
+
+std::vector<double> Algebra::Matrix::getRow(size_t i) const
+{
+    std::vector<double> vector;
+    for (size_t j = 0; j < this->_dimensions.N; j++)
+    {
+        vector.push_back(this->getElement(i, j));
+    }
+
+    return vector;
+}
+
+std::vector<double> Algebra::Matrix::getColumn(size_t j) const
+{
+    std::vector<double> vector;
+    for (size_t i = 0; i < this->_dimensions.M; i++)
+    {
+        vector.push_back(this->getElement(i, j));
     }
 
     return vector;
@@ -247,6 +301,22 @@ Matrix &Matrix::multiply(const Matrix &A, const Matrix &B)
             }
             newMatrix->setElement(i, j, sum);
         }
+    }
+
+    return *newMatrix;
+}
+
+Matrix &Algebra::Matrix::hadamard(const Matrix &A, const Matrix &B)
+{
+    if (A._dimensions.M != B._dimensions.M || A._dimensions.N != B._dimensions.N)
+        throw AlgebraError::MatrixDimensionsMismatch();
+
+    Matrix *newMatrix = new Matrix(A);
+    size_t linearSize = A._dimensions.M * A._dimensions.N;
+
+    for (size_t i = 0; i < linearSize; i++)
+    {
+        newMatrix->_matrix[i] = A._matrix[i] * B._matrix[i];
     }
 
     return *newMatrix;

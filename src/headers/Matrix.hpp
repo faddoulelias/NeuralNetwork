@@ -26,9 +26,15 @@ namespace Algebra
         Matrix(Dimensions dimensions, double min, double max);
         Matrix(const Matrix &matrix);
 
+        Matrix &Identity(size_t M);
+        Matrix &Zero(Dimensions dimensions);
+
         static Matrix &columnVector(std::vector<double> vector);
         static Matrix &rowVector(std::vector<double> vector);
         std::vector<double> toVector() const;
+        std::vector<std::vector<double>> to2DVector() const;
+        std::vector<double> getRow(size_t i) const;
+        std::vector<double> getColumn(size_t j) const;
 
         static Matrix &identity(size_t M);
         static Matrix &zero(Dimensions dimensions);
@@ -46,6 +52,7 @@ namespace Algebra
         static Matrix &add(const Matrix &A, const Matrix &B);
         static Matrix &multiply(double scalar, const Matrix &matrix);
         static Matrix &multiply(const Matrix &A, const Matrix &B);
+        static Matrix &hadamard(const Matrix &A, const Matrix &B);
         double sum() const;
         Matrix &transposed() const;
 
